@@ -1,5 +1,4 @@
-var uwp = require('uwp');
-uwp.projectNamespace('Windows');
+var NanoTimer = require('nanotimer');
 
 /* jshint undef: false */
 var controller = function(pgpioPin, speed) {
@@ -7,6 +6,7 @@ var controller = function(pgpioPin, speed) {
     var _timeout = speed;
     var _gpioPin = pgpioPin;
     var _pin = gpioController.openPin(_gpioPin);
+    var _timer = new NanoTimer();
 
     var setBlinkSpeed = function(req, res) {
         _timeout = req.params.speed;
@@ -17,7 +17,7 @@ var controller = function(pgpioPin, speed) {
         var currentValue = Windows.Devices.Gpio.GpioPinValue.high;
         _pin.write(currentValue);
         _pin.setDriveMode(Windows.Devices.Gpio.GpioPinDriveMode.output);
-        setTimeout(flipLed, _timeout);
+        _timer.setTimeout(flipLed, '', _timeout + 'm');
 
         function flipLed() {
             if (currentValue === Windows.Devices.Gpio.GpioPinValue.high) {
@@ -26,7 +26,7 @@ var controller = function(pgpioPin, speed) {
                 currentValue = Windows.Devices.Gpio.GpioPinValue.high;
             }
             _pin.write(currentValue);
-            setTimeout(flipLed, _timeout);
+            _timer.setTimeout(flipLed, '', _timeout + 'm');
         }
         res.render('blinky', {title: 'Blinky test', gpioPin: _gpioPin, timeout: _timeout});
     };

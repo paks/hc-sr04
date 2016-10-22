@@ -4,10 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var uwp = require('uwp');
+uwp.projectNamespace('Windows');
 
 var routes = require('./src/routes/index');
 var users = require('./src/routes/users');
 var blinkyRouter = require('./src/routes/blinkyRouter');
+var hcsr04Router = require('./src/routes/hcsr04Router');
 
 var app = express();
 
@@ -26,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/blinky', blinkyRouter);
+app.use('/hcsr04', hcsr04Router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

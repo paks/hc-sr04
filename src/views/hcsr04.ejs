@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <p>Trigger Pin: <%= gpioTriggerPin %></p>
+    <p>Echo Pin: <%= gpioEchoPin %></p>
+    <p>Speed of Sound: 3.4029e-6 cm/ns</p>
+    <p>Echo: <%= echo %> ns</p>
+    <p>Distance: <%= distance %> cm</p>
+    <p>Status: <%= status %></p>
+    <form action="/hcsr04" method="get">
+      <input type="submit" value="Test">
+    </form>
+  </body>
+</html>
